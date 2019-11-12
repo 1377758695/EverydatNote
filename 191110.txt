@@ -1,0 +1,11 @@
+1、 在使用pangolin时，一定要用gcc/g++5，而不能用4.8，否则会报错找不到定义，这是因为在编译pangolin的时候用的时5而不是4.8
+
+2、报错：
+Using the 'memory' GSettings backend.  Your settings will not be saved or shared with other applications.
+
+解决方案：
+sudo gedit ~/.bashrc
+export GIO_EXTRA_MODULES=/usr/lib/x86_64-linux-gnu/gio/modules/
+source ~./bashrc
+
+3、若.sh文件执行时报错Permission denied，有可能是root问题，如果root后依然permission denied，ls -l看看.sh文件是否为绿色，不是则说明没有可执行权限，需要chmod +x xxx.sh,然后再执行

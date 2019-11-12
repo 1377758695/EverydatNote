@@ -1,0 +1,23 @@
+1、复制文件夹，并保留其下文件结构
+cp -r /usr/local/include/eigen3 /usr/include
+
+2、安装texlive+texstudio+xeCJK
+首先安装texlive
+sudo apt-get install texlive
+xelatex进行编译
+sudo apt-get install texlive-xetex
+\usepackage{xeCJK}来使用中文
+sudo apt-get install texlive-lang-chinese
+最后安装texstudio
+sudo apt-get install texstudio
+
+3、linux下的公式编辑器KLatexFormula安装
+sudo apt-get install klatexformula
+
+4、linux下mathpix公式截图工具安装
+sudo snap install mathpix-snipping-tool
+
+5、安装wps
+deb包在硬盘里
+
+
