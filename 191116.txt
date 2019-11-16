@@ -1,0 +1,39 @@
+### ubuntu有线连接
+首先查看一下网卡情况：
+ifconfig
+可以发现有线网卡ethp2s0已经起来了，但是并没有成功连接，地址什么的都没有显示
+然后来看一下网卡驱动：
+lspci -v
+找到ethernet controller
+重点来了，从输出的信息中我们发现，网卡版本是瑞昱RTL8111/8168/8411,然而实际正在用的驱动模块为r8169,怪不得有戏连不上！
+接下来，下载驱动，卸载8169！
+
+查看8169驱动路径：
+modinfo r8169 |grep filename
+
+备份8169
+mv path to path.backup
+
+安装r8168
+sudo sh ./autorun.sh
+
+在/etc/network/interfaces中添加新的ip地址如下：
+auto enp2s0
+iface enp2s0 inet static
+address 10.110.36.176
+netmask 255.255.255.0
+gateway 10.110.36.1
+
+重启网络
+sudo /etc/init.d/networking restart
+
+但是你会发现，在右上角网络连接里找不到你想要的有线连接，断开无线网络后会显示wired unmanaged，这是因为没有开启manage服务
+sudo gedit /etc/NetworkManager/NetworkManager.conf 
+
+将该文件下的managed选项由false改为true
+
+重启manager服务：
+service network-manager restart
+
+然后你就会欣喜地发现，有线连接出来了！
+
