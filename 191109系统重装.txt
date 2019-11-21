@@ -62,16 +62,17 @@ sudo apt-get update
 ubuntu-derivers devices
 sudo apt-get install nvidia-410
 
-7、opencv安装
+7、opencv与opencv_contrib安装
 1）https://opencv.org/releases/下载openc3.4.5sources文件并解压
+2) https://github.com/opencv/opencv_contrib.git下载对应版本opencv_contrib文件并解压到opencv文件夹下
 2）安装cmake
 sudo apt-get install cmake
 3）安装依赖项
-sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff4.dev libswscale-dev libjasper-dev
+sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff4.dev libswscale-dev libjasper-dev pkg-config python-dev python-numpy libtbb2 libtbb-dev libpng-dev libdc1394-22-dev qt5-default ccache libv4l-dev libavresample-dev libgphoto2-dev libopenblas-base libopenblas-dev doxygen openjdk-8-jdk pylint
 4）编译
 mkdir build
 cd build
-cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..
+cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=/path/to/opencv_contrib/modules/ ..
 期间会下载IPPICV需要等待一段时间
 sudo make
 编译很久
@@ -80,7 +81,6 @@ sudo make install
 sudo gedit /etc/ld.so.conf.d/opencv.conf
 添加 /usr/local/lib
 执行 sudo ldconfig 使命令生效
-
 6）配置bash
 sudo gedit ~/.bashrc
 在末尾添加：
@@ -88,7 +88,6 @@ PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
 export PKG_CONFIG_PATH
 执行 source ~./bashrc 使命令生效
 sudo updatedb
-
 7）测试
 
 8、anaconda3安装配置
