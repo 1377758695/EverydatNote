@@ -68,7 +68,7 @@ sudo apt-get install nvidia-410
 2）安装cmake
 sudo apt-get install cmake
 3）安装依赖项
-sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff4.dev libswscale-dev libjasper-dev pkg-config python-dev python-numpy libtbb2 libtbb-dev libpng-dev libdc1394-22-dev qt5-default ccache libv4l-dev libavresample-dev libgphoto2-dev libopenblas-base libopenblas-dev doxygen openjdk-8-jdk pylint
+sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff4.dev libswscale-dev libjasper-dev pkg-config python-dev python-numpy libtbb2 libtbb-dev libpng-dev libdc1394-22-dev qt5-default ccache libv4l-dev libavresample-dev libgphoto2-dev libopenblas-base libopenblas-dev doxygen openjdk-8-jdk pylint libgtk-3-dev
 4）编译
 mkdir build
 cd build
@@ -89,6 +89,11 @@ export PKG_CONFIG_PATH
 执行 source ~./bashrc 使命令生效
 sudo updatedb
 7）测试
+8）出现以下问题时：
+Duplicated modules NAMES has been found Call Stack (most recent call first): cmake/OpenCVModule.cmake:370 (_assert_uniqueness) modules/CMakeLists.txt:7 (ocv_glob_modules)
+
+cd opencv_contrib 
+git checkout 3.4.3 #对应你的版本号
 
 8、anaconda3安装配置
 1）从清华源 https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/ 下载最新版本anaconda3安装包
@@ -99,6 +104,9 @@ conda create pytorch python=3.7
 conda create tensorflow python=3.7
 ② 安装常用包
 包括pytorch tensorflow-gpu numpy scipy matplotlib pandas scikit-learn scikit-image等
+
+./xxx.sh -u可以覆盖重装，而且不会删除之前创建的环境
+没事不！要！更！新！conda！
 
 9、clion安装
 如果出现找不到桌面图标的情况
@@ -200,3 +208,39 @@ rm -rf /run/user/1000/gvfs
 
 16、使用命令sudo apt-cache search name模糊查找可安装软件包
 17、使用命令sudo apt-get -f install安装缺少的依赖项
+
+18、Sophus李群李代数库安装
+
+19、点云库pcl1.7安装
+sudo apt-get install libpcl-dev pcl-tools
+
+20、Ceres最小二乘库安装
+首先安装依赖项：
+（1）sudo gedit /etc/apt/sources.list
+在其中添加源：deb http://cz.archive.ubuntu.com/ubuntu trusty main universe 
+更新：sudo apt-get update
+(2)安装依赖项:
+sudo apt-get install liblapack-dev libsuitesparse-dev libcxsparse3.1.2 libgflags-dev 
+sudo apt-get install libgoogle-glog-dev libgtest-dev
+(3)进入ceres文件夹
+修改CMakeLists：
+set(CXSPARSE_INCLUDE_DIR "/usr/include/suitesparse/cxsparse")
+否则会找不到cxsparse库
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+
+21、编译点云例程时报错
+The imported target "vtkRenderingPythonTkWidgets" references the file
+   "/usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so"
+but this file does not exist.
+和
+The imported target "vtk" references the file
+   "/usr/bin/vtk"
+but this file does not exist.
+可以通过命令
+sudo apt-get install python-vtk
+解决
+
